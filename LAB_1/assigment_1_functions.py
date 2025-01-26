@@ -1,4 +1,5 @@
 import itertools as it
+from collections import Counter
 
 x = it.product(range(0,10), repeat=4)
 valid_numbers = [combo for combo in x if combo[0] != 0] 
@@ -69,3 +70,51 @@ total_count = len(repeated_digits)
 # Output the results
 print(f"Total numbers with all 4 digits repeated: {total_count}")
 
+def find_double_repeated_digits():
+    # Get all possible pairs of digits (0-9) that could be our two repeated digits
+    digit_pairs = list(it.combinations(range(10), 2))
+    
+    count = 0
+    numbers = []
+    
+    for pair in digit_pairs:
+        # Create a list with each digit repeated twice
+        digits = [pair[0], pair[0], pair[1], pair[1]]
+        
+        # Get all possible arrangements of these digits
+        perms = set(it.permutations(digits))
+        
+        # Filter out numbers that start with 0
+        valid_perms = [p for p in perms if p[0] != 0]
+        
+        # Convert permutations to actual numbers and add to our list
+        numbers.extend([int(''.join(map(str, p))) for p in valid_perms])
+        count += len(valid_perms)
+    
+    return count, sorted(numbers)
+
+# Run the function and display results
+count, numbers = find_double_repeated_digits()
+print(f"Total count: {count}")
+print("Example numbers:", numbers[:10])
+
+
+
+
+S = it.product(range(10), repeat=4)
+valid_numbers = [k for k in S if k[0] != 0]
+digitsTwice = [r for r in valid_numbers if len(set(r)) == 2 and all(r.count(d) == 2 for d in set(r))]
+print(len(digitsTwice))  # Output: 90
+
+# More efficient version using sets and collections.Counter
+
+
+S = it.product(range(10), repeat=4)
+valid_numbers = (k for k in S if k[0] != 0) # Use a generator for efficiency
+digitsTwice = [r for r in valid_numbers if len(set(r)) == 2 and all(count == 2 for count in Counter(r).values())]
+print(len(digitsTwice)) # Output: 90
+
+S = it.product(range(10), repeat=4)
+valid_numbers = (k for k in S if k[0] != 0)
+digitsTwice_count = sum(1 for r in valid_numbers if len(set(r)) == 2 and all(count == 2 for count in Counter(r).values()))
+print(digitsTwice_count) # Output: 90
