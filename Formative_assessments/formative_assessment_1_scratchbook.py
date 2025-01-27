@@ -96,7 +96,7 @@ p_red = total_red / total_balls
 p_blue = total_blue / total_balls
 p_green = total_green / total_balls
 
-p_same_color = (p_red * 3) + (p_blue * 3) + (p_green ** 3)
+p_same_color = (p_red ** 3) + (p_blue ** 3) + (p_green ** 3)
 
 
 p_different_colors = 6 * (p_red * p_blue * p_green)
