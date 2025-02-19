@@ -5,6 +5,7 @@
 #b. Liste los resultados del evento $\{X=3\}$.
 
 import itertools as it
+import math
 
 
 def coin(n):
@@ -60,13 +61,22 @@ def freq_table_sumX(iterable):
         freq[x] = freq.get(x, 0) + 1
     return freq
 
+
+def highest_frequencies(freq):
+    highest_freq = max(freq.values())
+    return [k for k,v in freq.items() if v == highest_freq]
+
 def frequency_table_sumX_result(n):
     freq = freq_table_sumX(die_sumX(n))
     if sum(freq.values()) == len(list(die_sumX(n))):
         print(f"The sum of the frequencies is {sum(freq.values())} and it is equal to the number of possible outcomes")
         print(f"The frequencies are: {freq}")
         print("Also: ")
-        print(f"The highest frequency is {max(freq.values())} at X={max(freq, key=freq.get)}")
+        highest_freqs = highest_frequencies(freq)
+        if len(highest_freqs) > 1:
+            print(f"There are {len(highest_freqs)} highest frequencies of {max(freq.values())} at X={', '.join(map(str, highest_freqs))}")
+        else:
+            print(f"The highest frequency is {max(freq.values())} at X={max(freq, key=freq.get)}")
     else:
         print("Error: The sum of the frequencies is not equal to the number of possible outcomes")
 
@@ -74,22 +84,50 @@ frequency_table_sumX_result(3)
 
 ### b
 def die_productY(n):
-    return it.product(range(1, 7), repeat=n)
+    return (math.prod(x) for x in it.product(range(1, 7), repeat=n))
 
 def freq_table_productY(iterable):
     freq = {}
-    for x in iterable:
-        freq[x] = freq.get(x, 0) + 1
+    for y in iterable:
+        freq[y] = freq.get(y, 0) + 1
     return freq
 
 def frequency_table_productY_result(n):
     freq = freq_table_productY(die_productY(n))
     if sum(freq.values()) == len(list(die_productY(n))):
         print(f"The sum of the frequencies is {sum(freq.values())} and it is equal to the number of possible outcomes")
-        #print(f"The frequencies are: {freq}")
+        print(f"The frequencies are: {freq}")
         print("Also: ")
-        print(f"The highest frequency is {max(freq.values())} at Y={max(freq, key=freq.get)}")
+        highest_freqs = highest_frequencies(freq)
+        if len(highest_freqs) > 1:
+            print(f"There are {len(highest_freqs)} highest frequencies of {max(freq.values())} at Y={', '.join(map(str, highest_freqs))}")
+        else:
+            print(f"The highest frequency is {max(freq.values())} at Y={max(freq, key=freq.get)}")
     else:
         print("Error: The sum of the frequencies is not equal to the number of possible outcomes")
 
 frequency_table_productY_result(3)
+
+
+#### c
+
+def leq_sum(n, die_count):
+    outcomes = [x for x in die_sumX(die_count) if x <= n]
+    if outcomes:
+        print(f"The number of events where (X<={n}) is:", len(outcomes))
+        print(f"The events where (X<={n}) are:", outcomes)
+    else:
+        print(f"Notice: There are no events where (X<={n})")
+leq_sum(n = 5, die_count=3)
+
+#### d
+
+def leq_product(n,m, die_count):
+    outcomes = [y for y in die_productY(die_count) if n <= y <= m]
+    if outcomes:
+        print(f"The number of events where ({n}<=Y<={m}) is:", len(outcomes))
+        print(f"The events where ({n}<=Y<={m}) are:", outcomes)
+    else:
+        print(f"Notice: There are no events where ({n}<=Y<={m})")
+leq_product(n = 8, m = 12, die_count=3)
+
