@@ -160,3 +160,16 @@ print(f"P(X >= 2) = {probabilities_ases_ge_2:.4f}")
 
 probabilities_ases_le_3 = sum([probabilities_ases[i] for i in range(1, 4)])
 print(f"P(1 <= X <= 3) = {probabilities_ases_le_3:.4f}")
+
+## Ejercicio 6.
+# Sea $X$ una variable aleatoria continua que representa el tiempo (en minutos) entre llegadas de clientes a un banco. Si la función de densidad de probabilidad de $X$ es:
+
+# $$f(x)=\left\{\begin{array}{rl}\frac{2}{3}e^{-2x/3},& x\geq 0\\ 0,& \text{caso contrario}\end{array}\right.$$
+					
+# a. ¿Qué es más probable? Que llegue un cliente en los próximos 30 segundos, o que no llegue ningún cliente en los próximos 2 minutos.
+
+# b. ¿Cuál es la probabilidad de que no llegue ningún cliente en el minuto siguiente, dado que no ha llegado ningún cliente en el último minuto?
+
+# c. Calcule $E[X]$ y $Var(X)$.
+
+
